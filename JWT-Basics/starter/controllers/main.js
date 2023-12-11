@@ -16,22 +16,8 @@ const login = async (req, res) => {
 }
 
 const dashboard = async (req, res) => {
-    const authHeader = req.headers.authorization
-    let decoded
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        throw new CustomError('No token, no permission', 401)
-    }
-    // take space's back string for compare
-    const token = authHeader.split(' ')[1]
-
-    try {
-        decoded = jwt.verify(token, process.env.JWT_SECRET)
-    } catch(error) {
-        throw new CustomError('No authority to access this route', 401)
-    }
-
     const luckyNumber = Math.floor(Math.random() * 100)
-    res.status(200).json({msg: `Hello, ${decoded.username}!!!`, secret:`Here is your authority data. Lucky Number is ${luckyNumber}`})
+    res.status(200).json({msg: `Hello, ${req.user.username}!!!`, secret:`Here is your authority data. Lucky Number is ${luckyNumber}`})
 }
 
 module.exports = {
