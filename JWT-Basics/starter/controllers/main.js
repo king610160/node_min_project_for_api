@@ -1,11 +1,12 @@
 const CustomError = require('../errors/custom-error')
 const jwt = require('jsonwebtoken')
+const { BadRequestError } = require('../errors')
 
 const login = async (req, res) => {
     const { username, password } = req.body
 
     if (!username || !password) {
-        throw new CustomError('Please enter username and password', 400)
+        throw new BadRequestError('Please enter username and password')
     }
 
     // just pass random id
